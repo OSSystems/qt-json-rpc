@@ -96,7 +96,7 @@ void Peer::handleMessage(const QByteArray &json)
     QVariant object = parser.parse(json, &ok);
 
     if (!ok) {
-        emit readyResponseMessage(static_cast<QByteArray>(Error(ErrorCode::PARSE_ERROR)));
+        emit readyResponseMessage(static_cast<QByteArray>(Error(PARSE_ERROR)));
         return;
     }
 
@@ -105,20 +105,20 @@ void Peer::handleMessage(const QByteArray &json)
     else if (isResponseMessage(object))
         handleResponse(object);
     else
-        emit readyResponseMessage(static_cast<QByteArray>(Error(ErrorCode::INVALID_REQUEST)));
+        emit readyResponseMessage(static_cast<QByteArray>(Error(INVALID_REQUEST)));
 }
 
 void Peer::handleRequest(const QVariant &json)
 {
     if (json.type() != QVariant::Map) {
-        emit readyResponseMessage(static_cast<QByteArray>(Error(ErrorCode::INVALID_REQUEST)));
+        emit readyResponseMessage(static_cast<QByteArray>(Error(INVALID_REQUEST)));
         return;
     }
 
     QVariantMap object = json.toMap();
 
     if (!object.contains("method")) {
-        emit readyResponseMessage(static_cast<QByteArray>(Error(ErrorCode::INVALID_REQUEST)));
+        emit readyResponseMessage(static_cast<QByteArray>(Error(INVALID_REQUEST)));
         return;
     }
 
@@ -127,11 +127,11 @@ void Peer::handleRequest(const QVariant &json)
 
     if (method.type() == QVariant::String) {
         if (!handler->setMethod(method.toString())) {
-            emit readyResponseMessage(static_cast<QByteArray>(Error(ErrorCode::INVALID_REQUEST)));
+            emit readyResponseMessage(static_cast<QByteArray>(Error(INVALID_REQUEST)));
             return;
         }
     } else {
-        emit readyResponseMessage(static_cast<QByteArray>(Error(ErrorCode::INVALID_REQUEST)));
+        emit readyResponseMessage(static_cast<QByteArray>(Error(INVALID_REQUEST)));
         return;
     }
 
@@ -139,7 +139,7 @@ void Peer::handleRequest(const QVariant &json)
         QVariant params = object["params"];
 
         if (!handler->setParams(params)) {
-            emit readyResponseMessage(static_cast<QByteArray>(Error(ErrorCode::INVALID_REQUEST)));
+            emit readyResponseMessage(static_cast<QByteArray>(Error(INVALID_REQUEST)));
             return;
         }
     }
@@ -148,7 +148,7 @@ void Peer::handleRequest(const QVariant &json)
         QVariant id = object["id"];
 
         if (!handler->setId(id)) {
-            emit readyResponseMessage(static_cast<QByteArray>(Error(ErrorCode::INVALID_REQUEST)));
+            emit readyResponseMessage(static_cast<QByteArray>(Error(INVALID_REQUEST)));
             return;
         }
     }
@@ -203,7 +203,7 @@ void Peer::handleResponse(const QVariant &json)
         return;
     }
 
-    for (const QVariant &object: objects) {
+    Q_FOREACH (const QVariant &object, objects) {
         if (object.type() == QVariant::Map) {
             QVariantMap objectMap = object.toMap();
 

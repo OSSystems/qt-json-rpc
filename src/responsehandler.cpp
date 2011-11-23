@@ -63,7 +63,7 @@ QVariant ResponseHandler::params() const
 
 bool ResponseHandler::setParams(const QVariant &params)
 {
-    const auto paramsType = params.type();
+    const QVariant::Type paramsType = params.type();
     if (paramsType != QVariant::List
             && paramsType != QVariant::Map
             && !params.isNull())
@@ -90,7 +90,7 @@ QVariant ResponseHandler::id() const
 
 bool ResponseHandler::setId(const QVariant &id)
 {
-    const auto idType = id.type();
+    const QVariant::Type idType = id.type();
     if (idType != QVariant::String
             && idType != QVariant::Int
             && idType != QVariant::ULongLong

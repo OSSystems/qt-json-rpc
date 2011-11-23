@@ -28,7 +28,7 @@ namespace Phobos {
 
 class Peer;
 
-enum class ErrorCode
+enum ErrorCode
 {
     NO_ERROR,
     PARSE_ERROR      = -32700,
@@ -50,8 +50,8 @@ struct PHOBOSRPC_EXPORT Error
       error codes. If you pass a non-standard error code,
       ErrorCode::NO_ERROR will be used.
       */
-    Error(ErrorCode code = ErrorCode::NO_ERROR);
-    Error(const Error &) = default;
+    Error(ErrorCode code = NO_ERROR);
+    Error(const Error &);
 
     /*! Generates the JSON object.
       */

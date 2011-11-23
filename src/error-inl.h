@@ -26,22 +26,22 @@ Phobos::Error::Error(ErrorCode code) :
     code(code)
 {
     switch (code) {
-    case ErrorCode::PARSE_ERROR:
+    case PARSE_ERROR:
         desc = "Invalid JSON was received by the server.";
         break;
-    case ErrorCode::INVALID_REQUEST:
+    case INVALID_REQUEST:
         desc = "The JSON sent is not a valid Request object.";
         break;
-    case ErrorCode::METHOD_NOT_FOUND:
+    case METHOD_NOT_FOUND:
         desc = "The method does not exist / is not available.";
         break;
-    case ErrorCode::INVALID_PARAMS:
+    case INVALID_PARAMS:
         desc = "Invalid method parameter(s).";
         break;
-    case ErrorCode::INTERNAL_ERROR:
+    case INTERNAL_ERROR:
     default:
-        this->code = ErrorCode::NO_ERROR;
-    case ErrorCode::NO_ERROR:
+        this->code = NO_ERROR;
+    case NO_ERROR:
         break;
     }
 }
