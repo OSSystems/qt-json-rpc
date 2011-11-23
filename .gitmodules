@@ -1,0 +1,3 @@
+[submodule "3rdparty/qt-json"]
+	path = 3rdparty/qt-json
+	url = git://github.com/ereilin/qt-json.git
