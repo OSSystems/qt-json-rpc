@@ -20,7 +20,9 @@
   @warning this file should be included only by responsehandler.cpp
   */
 
-#include <qjson/serializer.h>
+#include "responsehandler.h"
+
+#include <qt-json/json.h>
 
 Phobos::Error::Error(ErrorCode code) :
     code(code)
@@ -54,8 +56,7 @@ Phobos::Error::Error(ErrorCode code, QString desc) :
 
 Phobos::Error::operator QByteArray() const
 {
-    QJson::Serializer serializer;
-    return serializer.serialize(static_cast<QVariantMap>(*this));
+    return QtJson::Json::serialize(static_cast<QVariantMap>(*this));
 }
 
 Phobos::Error::operator QVariantMap() const

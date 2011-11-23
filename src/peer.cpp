@@ -18,10 +18,11 @@
   */
 
 #include "peer.h"
-#include <QVariantMap>
-#include <qjson/parser.h>
-#include <qjson/serializer.h>
 #include "responsehandler.h"
+
+#include <QVariantMap>
+
+#include <qt-json/json.h>
 
 using namespace std;
 using namespace Phobos;
@@ -90,10 +91,8 @@ Peer::Peer(QObject *parent) :
 
 void Peer::handleMessage(const QByteArray &json)
 {
-    QJson::Parser parser;
-
     bool ok;
-    QVariant object = parser.parse(json, &ok);
+    QVariant object = QtJson::Json::parse(QString::fromUtf8(json), ok);
 
     if (!ok) {
         emit readyResponseMessage(static_cast<QByteArray>(Error(PARSE_ERROR)));
@@ -158,8 +157,7 @@ void Peer::handleRequest(const QVariant &json)
 
 void Peer::reply(const QVariant &json)
 {
-    QJson::Serializer serializer;
-    emit readyResponseMessage(serializer.serialize(json));
+    emit readyResponseMessage(QtJson::Json::serialize(json));
 }
 
 bool Peer::call(const QString &method, const QVariant &params, const QVariant &id)
@@ -187,8 +185,7 @@ bool Peer::call(const QString &method, const QVariant &params, const QVariant &i
 
     object.insert("id", id);
 
-    QJson::Serializer serializer;
-    emit readyRequestMessage(serializer.serialize(object));
+    emit readyRequestMessage(QtJson::Json::serialize(object));
     return true;
 }
 

@@ -20,7 +20,8 @@
 #include "httphelper.h"
 #include <QNetworkAccessManager>
 #include <QNetworkRequest>
-#include <qjson/parser.h>
+
+#include <qt-json/json.h>
 
 using namespace Phobos;
 
@@ -71,9 +72,8 @@ void HttpHelper::replyFinished(QNetworkReply *reply)
     QByteArray content = reply->readAll();
 
     if (reply->error() != QNetworkReply::NoError) {
-        QJson::Parser parser;
         bool ok;
-        parser.parse(content, &ok);
+        QtJson::Json::parse(QString::fromUtf8(content), ok);
 
         if (!ok) {
             emit error(reply->error());
