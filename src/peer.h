@@ -20,7 +20,6 @@
 #ifndef PHOBOS_PEER_H
 #define PHOBOS_PEER_H
 
-#include "phobosrpc_global.h"
 #include <QObject>
 #include <QVariant>
 #include <QSharedPointer>
@@ -32,7 +31,7 @@ class ResponseHandler;
 /*!
   JSON-RPC 2.0 handler (server and client)
   */
-class PHOBOSRPC_EXPORT Peer: public QObject
+class Peer: public QObject
 {
     Q_OBJECT
 public:

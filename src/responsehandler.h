@@ -20,7 +20,6 @@
 #ifndef PHOBOS_RESPONSEHANDLER_H
 #define PHOBOS_RESPONSEHANDLER_H
 
-#include "phobosrpc_global.h"
 #include <QVariant>
 #include <QPointer>
 
@@ -38,7 +37,7 @@ enum ErrorCode
     INTERNAL_ERROR   = -32603
 };
 
-struct PHOBOSRPC_EXPORT Error
+struct Error
 {
     /*!
       @brief Constructs a Error object with \param code error code and
@@ -69,7 +68,7 @@ struct PHOBOSRPC_EXPORT Error
     QString desc;
 };
 
-class PHOBOSRPC_EXPORT ResponseHandler
+class ResponseHandler
 {
 public:
     /*!

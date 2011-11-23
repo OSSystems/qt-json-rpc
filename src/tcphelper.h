@@ -39,7 +39,7 @@ namespace Phobos {
   @warning using this protocol, the maximum size for each message is 65535
   bytes.
   */
-class PHOBOSRPC_EXPORT TcpHelper : public QObject
+class TcpHelper : public QObject
 {
     Q_OBJECT
 public:

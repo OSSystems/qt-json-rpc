@@ -28,7 +28,7 @@ class QNetworkAccessManager;
 
 namespace Phobos {
 
-class PHOBOSRPC_EXPORT HttpHelper : public QObject
+class HttpHelper : public QObject
 {
     Q_OBJECT
 public:
