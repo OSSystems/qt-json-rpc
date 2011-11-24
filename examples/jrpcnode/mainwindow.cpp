@@ -1,7 +1,9 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "phobos/peer.h"
-#include "phobos/responsehandler.h"
+
+#include "peer.h"
+#include "responsehandler.h"
+
 #include <QMessageBox>
 #include <QTcpServer>
 #include <QTcpSocket>
@@ -67,7 +69,7 @@ void MainWindow::onReadyRequest(const QSharedPointer<JsonRPC::ResponseHandler> &
         dbg << handler->params();
         QMessageBox::information(this, "Echo", text, QMessageBox::Ok);
     } else {
-        handler->error(Error(ErrorCode::METHOD_NOT_FOUND));
+        handler->error(Error(METHOD_NOT_FOUND));
     }
 }
 
