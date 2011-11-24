@@ -1,9 +1,10 @@
 //  Copyright © 2011  Vinícius dos Santos Oliveira
 
 #include "responsehandler.h"
-#include <QVariantMap>
-#include "error-inl.h"
+#include "error.h"
 #include "peer.h"
+
+#include <QVariantMap>
 
 using namespace JsonRPC;
 
