@@ -1,8 +1,9 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include <QDebug>
-#include "phobos/responsehandler.h"
+#include "responsehandler.h"
+
 #include <QInputDialog>
+#include <QDebug>
 
 inline QString variantToDebugString(const QVariant &variant)
 {
@@ -130,7 +131,7 @@ void MainWindow::on_requestsListWidget_itemActivated(QListWidgetItem *item)
 {
     QVariant id = item->data(Qt::UserRole);
     if (handlers.contains(id)) {
-        auto responseHandler = handlers[id];
+        QSharedPointer<JsonRPC::ResponseHandler> responseHandler = handlers[id];
         responseHandler->response(QInputDialog::getText(this, "Result", "Result:"));
     }
 

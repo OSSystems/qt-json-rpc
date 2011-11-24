@@ -2,7 +2,8 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include "phobos/tcphelper.h"
+
+#include "tcphelper.h"
 
 namespace Ui {
     class MainWindow;
