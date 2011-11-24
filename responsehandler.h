@@ -6,6 +6,8 @@
 #include <QVariant>
 #include <QPointer>
 
+#include "error.h"
+
 namespace JsonRPC {
 
 class Peer;

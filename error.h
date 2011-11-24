@@ -6,6 +6,8 @@
 #include <QVariantMap>
 #include <QByteArray>
 
+namespace JsonRPC {
+
 enum ErrorCode
 {
     NO_ERROR,
@@ -46,5 +48,7 @@ struct Error
       */
     QString desc;
 };
+
+} // namespace JsonRPC
 
 #endif // QTJSONRPC_ERROR_H
