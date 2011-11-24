@@ -5,13 +5,14 @@ INCLUDEPATH += $$PWD/ $$PWD/3rdparty/
 HEADERS += $$PWD/3rdparty/qt-json/json.h
 SOURCES += $$PWD/3rdparty/qt-json/json.cpp
 
-HEADERS += $$PWD/error-inl.h \
+HEADERS += $$PWD/error.h \
         $$PWD/httphelper.h \
         $$PWD/peer.h \
         $$PWD/responsehandler.h \
         $$PWD/tcphelper.h
 
-SOURCES += $$PWD/httphelper.cpp \
+SOURCES += $$PWD/error.cpp \
+        $$PWD/httphelper.cpp \
         $$PWD/peer.cpp \
         $$PWD/responsehandler.cpp \
         $$PWD/tcphelper.cpp

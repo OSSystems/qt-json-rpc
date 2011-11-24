@@ -4,7 +4,7 @@
   @warning this file should be included only by responsehandler.cpp
   */
 
-#include "error.h"
+#include "responsehandler.h"
 
 #include <qt-json/json.h>
 
