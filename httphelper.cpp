@@ -6,7 +6,7 @@
 
 #include <qt-json/json.h>
 
-using namespace Phobos;
+using namespace JsonRPC;
 
 HttpHelper::HttpHelper(QObject *parent) :
     QObject(parent),

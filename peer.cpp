@@ -8,7 +8,7 @@
 #include <qt-json/json.h>
 
 using namespace std;
-using namespace Phobos;
+using namespace JsonRPC;
 
 inline bool isRequestMessage(const QVariantMap &object)
 {
@@ -105,7 +105,7 @@ void Peer::handleRequest(const QVariant &json)
     }
 
     QVariant method = object["method"];
-    QSharedPointer<Phobos::ResponseHandler> handler(new ResponseHandler(this));
+    QSharedPointer<JsonRPC::ResponseHandler> handler(new ResponseHandler(this));
 
     if (method.type() == QVariant::String) {
         if (!handler->setMethod(method.toString())) {

@@ -9,7 +9,7 @@
 
 class QNetworkAccessManager;
 
-namespace Phobos {
+namespace JsonRPC {
 
 class HttpHelper : public QObject
 {
@@ -65,6 +65,6 @@ private:
     QUrl m_url;
 };
 
-} // namespace Phobos
+} // namespace JsonRPC
 
 #endif // PHOBOS_HTTPHELPER_H

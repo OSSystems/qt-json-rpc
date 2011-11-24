@@ -5,7 +5,7 @@
 #include "error-inl.h"
 #include "peer.h"
 
-using namespace Phobos;
+using namespace JsonRPC;
 
 ResponseHandler::ResponseHandler(Peer *peer) :
     peer(peer),
@@ -118,7 +118,7 @@ void ResponseHandler::response(const QVariant &result)
     peer = NULL;
 }
 
-void ResponseHandler::error(const Phobos::Error &error)
+void ResponseHandler::error(const JsonRPC::Error &error)
 {
     if (!m_hasId)
         peer = NULL;

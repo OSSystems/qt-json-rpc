@@ -7,7 +7,7 @@
 #include <QVariant>
 #include <QSharedPointer>
 
-namespace Phobos {
+namespace JsonRPC {
 
 class ResponseHandler;
 
@@ -29,7 +29,7 @@ signals:
       /param handler is the object that you use to send a response.
       @sa handleMessage
       */
-    void readyRequest(QSharedPointer<Phobos::ResponseHandler> handler);
+    void readyRequest(QSharedPointer<JsonRPC::ResponseHandler> handler);
     /*!
       Emitted when the message for your call is available.
       \param json is the message that you need to send to the other
@@ -93,6 +93,6 @@ public slots:
     bool call(const QString &method, const QVariant &params, const QVariant &id);
 };
 
-} // namespace Phobos
+} // namespace JsonRPC
 
 #endif // PHOBOS_PEER_H

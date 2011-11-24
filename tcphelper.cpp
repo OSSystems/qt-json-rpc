@@ -4,7 +4,7 @@
 #include <QTcpSocket>
 #include <QDataStream>
 
-using namespace Phobos;
+using namespace JsonRPC;
 
 TcpHelper::TcpHelper(QObject *parent) :
     QObject(parent),
@@ -38,9 +38,9 @@ bool TcpHelper::setSocket(QTcpSocket *socket)
         connect(peer, SIGNAL(requestError(int,QString,QVariant,QVariant)),
                 this, SIGNAL(requestError(int,QString,QVariant,QVariant)));
         connect(peer,
-                SIGNAL(readyRequest(QSharedPointer<Phobos::ResponseHandler>)),
+                SIGNAL(readyRequest(QSharedPointer<JsonRPC::ResponseHandler>)),
                 this,
-                SIGNAL(readyRequest(QSharedPointer<Phobos::ResponseHandler>)));
+                SIGNAL(readyRequest(QSharedPointer<JsonRPC::ResponseHandler>)));
 
         this->socket = socket;
         return true;

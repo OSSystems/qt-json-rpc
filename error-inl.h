@@ -8,7 +8,7 @@
 
 #include <qt-json/json.h>
 
-Phobos::Error::Error(ErrorCode code) :
+JsonRPC::Error::Error(ErrorCode code) :
     code(code)
 {
     switch (code) {
@@ -32,18 +32,18 @@ Phobos::Error::Error(ErrorCode code) :
     }
 }
 
-Phobos::Error::Error(ErrorCode code, QString desc) :
+JsonRPC::Error::Error(ErrorCode code, QString desc) :
     code(code),
     desc(desc)
 {
 }
 
-Phobos::Error::operator QByteArray() const
+JsonRPC::Error::operator QByteArray() const
 {
     return QtJson::Json::serialize(static_cast<QVariantMap>(*this));
 }
 
-Phobos::Error::operator QVariantMap() const
+JsonRPC::Error::operator QVariantMap() const
 {
     QVariantMap obj;
 

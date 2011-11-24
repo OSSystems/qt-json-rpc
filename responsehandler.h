@@ -6,7 +6,7 @@
 #include <QVariant>
 #include <QPointer>
 
-namespace Phobos {
+namespace JsonRPC {
 
 class Peer;
 
@@ -155,6 +155,6 @@ private:
     QVariant m_id;
 };
 
-} // namespace Phobos
+} // namespace JsonRPC
 
 #endif // PHOBOS_RESPONSEHANDLER_H

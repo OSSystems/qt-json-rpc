@@ -7,10 +7,10 @@
 
 class QTcpSocket;
 
-namespace Phobos {
+namespace JsonRPC {
 
 /*! TcpHelper is a helper class to use JSON-RPC over tpc sockets.
-  It uses the core classes of Phobos to implement this.
+  It uses the core classes of JsonRPC to implement this.
   The protocol is:
 
   [message size][JSON-RPC message]
@@ -56,7 +56,7 @@ signals:
       /param handler is the object that you use to send a response.
       @sa handleMessage
       */
-    void readyRequest(QSharedPointer<Phobos::ResponseHandler> handler);
+    void readyRequest(QSharedPointer<JsonRPC::ResponseHandler> handler);
 
     /*!
       Emitted when the socket has been disconnected.
@@ -84,6 +84,6 @@ private:
     quint16 nextMessageSize;
 };
 
-} // namespace Phobos
+} // namespace JsonRPC
 
 #endif // PHOBOS_TCPHELPER_H
