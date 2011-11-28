@@ -59,40 +59,35 @@ bool TcpHelper::call(const QString &method, const QVariant &params, const QVaria
 
 void TcpHelper::onReadyMessage(const QByteArray &json)
 {
-    {
-        QDataStream stream(socket);
-        stream.setVersion(QDataStream::Qt_4_6);
-        quint16 size = json.size();
-        stream << size;
-    }
-    socket->write(json);
+    QDataStream stream(socket);
+    stream.setVersion(QDataStream::Qt_4_6);
+    quint16 size = json.size();
+    stream << size;
+    stream << json;
 }
 
 void TcpHelper::onReadyRead()
 {
-    buffer.append(socket->readAll());
+    QDataStream stream(socket);
+    stream.setVersion(QDataStream::Qt_4_6);
 
-    if (nextMessageSize)
-        goto STATE_WAITING_FOR_CONTENT;
-
-    STATE_UNKNOW_SIZE:
-    // nextMessageSize is 2 bytes long (quint16)
-    if (buffer.size() >= 2) {
-        QDataStream stream(&buffer, QIODevice::ReadWrite);
-        stream.setVersion(QDataStream::Qt_4_6);
+    if (nextMessageSize == 0) {
+        if (socket->bytesAvailable() < (int)sizeof(quint16))
+            return;
         stream >> nextMessageSize;
-        buffer.remove(0, 2);
-    } else {
-        return;
     }
 
-    STATE_WAITING_FOR_CONTENT:
-    if (buffer.size() >= nextMessageSize) {
-        peer->handleMessage(buffer.left(nextMessageSize));
-        buffer.remove(0, nextMessageSize);
+    if (socket->bytesAvailable() < nextMessageSize)
+        return;
 
+    QByteArray data;
+    stream >> data;
+    buffer.append(data);
+
+    if (buffer.size() == nextMessageSize) {
+        peer->handleMessage(buffer);
+        buffer.clear();
         nextMessageSize = 0;
-        goto STATE_UNKNOW_SIZE;
     }
 }
 
