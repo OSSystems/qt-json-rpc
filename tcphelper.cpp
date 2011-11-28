@@ -26,6 +26,8 @@ bool TcpHelper::setSocket(QTcpSocket *socket)
                 this, SLOT(onReadyMessage(QByteArray)));
         connect(peer, SIGNAL(readyResponseMessage(QByteArray)),
                 this, SLOT(onReadyMessage(QByteArray)));
+        connect(peer, SIGNAL(readySignalMessage(QByteArray)),
+                this, SLOT(onReadyMessage(QByteArray)));
 
         connect(peer, SIGNAL(readyResponse(QVariant,QVariant)),
                 this, SIGNAL(readyResponse(QVariant,QVariant)));
@@ -35,6 +37,8 @@ bool TcpHelper::setSocket(QTcpSocket *socket)
                 SIGNAL(readyRequest(QSharedPointer<JsonRPC::ResponseHandler>)),
                 this,
                 SIGNAL(readyRequest(QSharedPointer<JsonRPC::ResponseHandler>)));
+        connect(peer, SIGNAL(readySignal(QString,QVariant)),
+                this, SIGNAL(readySignal(QString,QVariant)));
 
         this->socket = socket;
 
@@ -55,6 +59,12 @@ bool TcpHelper::call(const QString &method, const QVariant &params, const QVaria
         return peer->call(method, params, id);
     else
         return false;
+}
+
+void TcpHelper::emitSignal(const QString &signal, const QVariantList &params)
+{
+    if (peer)
+        peer->emitSignal(signal, params);
 }
 
 void TcpHelper::onReadyMessage(const QByteArray &json)

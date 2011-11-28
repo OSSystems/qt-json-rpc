@@ -59,6 +59,13 @@ signals:
     void readyRequest(QSharedPointer<JsonRPC::ResponseHandler> handler);
 
     /*!
+      Emitted when a new signal message is available.
+      /param signal is the signal name and params is the signal params.
+      @sa handleMessage
+      */
+    void readySignal(QString signal, QVariant params);
+
+    /*!
       Emitted when the socket has been disconnected.
       */
     void disconnected();
@@ -70,6 +77,12 @@ public slots:
       according JSON-RPC 2.0 spec.
       */
     bool call(const QString &method, const QVariant &params, const QVariant &id);
+
+    /*!
+      Send a signal
+      THIS IS A EXTENSION TO THE JSON-RPC PROTOCOL
+      */
+    void emitSignal(const QString &signal, const QVariantList &params);
 
 private slots:
     void onReadyMessage(const QByteArray &json);

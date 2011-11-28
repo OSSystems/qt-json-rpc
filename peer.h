@@ -53,6 +53,21 @@ signals:
     void readyResponseMessage(QByteArray json);
 
     /*!
+      Emitted when a new signal message is available.
+      /param signal is the signal name and params is the signal params.
+      @sa handleMessage
+      */
+    void readySignal(QString signal, QVariant params);
+
+    /*!
+      Emitted when the message for your signal is available.
+      \param json is the signal that you need to send to the other
+      peer.
+      @sa emitSignal
+      */
+    void readySignalMessage(QByteArray json);
+
+    /*!
       Emitted when a error response message is received.
       \param code is the error code (see the ErrorCode enum),
       \param message is a human-readable string, and data is
@@ -79,6 +94,12 @@ public slots:
     void handleResponse(const QVariant &json);
 
     /*!
+      It handles a signal message
+      @sa handleMessage
+      */
+    void handleSignal(const QVariant &json);
+
+    /*!
       Use this method to emit the readyResponseMessage signal.
       You probably don't want to use this.
       It's used by the ResponseHandler class.
@@ -91,6 +112,12 @@ public slots:
       according JSON-RPC 2.0 spec.
       */
     bool call(const QString &method, const QVariant &params, const QVariant &id);
+
+    /*!
+      Send a signal
+      THIS IS A EXTENSION TO THE JSON-RPC PROTOCOL
+      */
+    void emitSignal(const QString &signal, const QVariantList &params);
 };
 
 } // namespace JsonRPC

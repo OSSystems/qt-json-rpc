@@ -67,6 +67,34 @@ inline bool isResponseMessage(const QVariant &object)
     }
 }
 
+inline bool isSignalMessage(const QVariantMap &object)
+{
+    if (object.contains("signal"))
+        return true;
+    else
+        return false;
+}
+
+inline bool isSignalMessage(const QVariantList &objectList)
+{
+    if (objectList.size())
+        return true;
+    else
+        return false;
+}
+
+inline bool isSignalMessage(const QVariant &object)
+{
+    switch (object.type()) {
+    case QVariant::Map:
+        return isSignalMessage(object.toMap());
+    case QVariant::List:
+        return isSignalMessage(object.toList());
+    default:
+        return false;
+    }
+}
+
 Peer::Peer(QObject *parent) :
     QObject(parent)
 {
@@ -86,6 +114,8 @@ void Peer::handleMessage(const QByteArray &json)
         handleRequest(object);
     else if (isResponseMessage(object))
         handleResponse(object);
+    else if (isSignalMessage(object))
+        handleSignal(object);
     else
         emit readyResponseMessage(static_cast<QByteArray>(Error(INVALID_REQUEST)));
 }
@@ -172,6 +202,16 @@ bool Peer::call(const QString &method, const QVariant &params, const QVariant &i
     return true;
 }
 
+void Peer::emitSignal(const QString &signal, const QVariantList &params)
+{
+    QVariantMap object;
+    object.insert("jsonrpc", "2.0-EXTENSION");
+    object.insert("signal", signal);
+    object.insert("params", params);
+
+    emit readySignalMessage(QtJson::Json::serialize(object));
+}
+
 void Peer::handleResponse(const QVariant &json)
 {
     QVariantList objects;
@@ -213,4 +253,40 @@ void Peer::handleResponse(const QVariant &json)
             }
         }
     }
+}
+
+void Peer::handleSignal(const QVariant &json)
+{
+    if (json.type() != QVariant::Map) {
+        emit readyResponseMessage(static_cast<QByteArray>(Error(INVALID_REQUEST)));
+        return;
+    }
+
+    QVariantMap object = json.toMap();
+
+    if (!object.contains("signal")) {
+        emit readyResponseMessage(static_cast<QByteArray>(Error(INVALID_REQUEST)));
+        return;
+    }
+
+    QVariant signal = object["signal"];
+    if (signal.type() != QVariant::String) {
+        emit readyResponseMessage(static_cast<QByteArray>(Error(INVALID_REQUEST)));
+        return;
+    }
+
+    QVariant params;
+    if (object.contains("params")) {
+        params = object["params"];
+        const QVariant::Type paramsType = params.type();
+        if (paramsType != QVariant::List
+            && paramsType != QVariant::Map
+            && !params.isNull())
+        {
+            emit readyResponseMessage(static_cast<QByteArray>(Error(INVALID_REQUEST)));
+            return;
+        }
+    }
+
+    emit readySignal(signal.toString(), params);
 }
