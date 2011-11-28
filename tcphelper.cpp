@@ -99,7 +99,7 @@ void TcpHelper::onReadyRead()
 void TcpHelper::onDisconnected()
 {
     // clear peer data
-    delete peer;
+    peer->deleteLater();
     peer = NULL;
 
     // clear buffer data
