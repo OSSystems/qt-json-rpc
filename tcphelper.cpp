@@ -61,6 +61,7 @@ void TcpHelper::onReadyMessage(const QByteArray &json)
 {
     {
         QDataStream stream(socket);
+        stream.setVersion(QDataStream::Qt_4_6);
         quint16 size = json.size();
         stream << size;
     }
@@ -78,6 +79,7 @@ void TcpHelper::onReadyRead()
     // nextMessageSize is 2 bytes long (quint16)
     if (buffer.size() >= 2) {
         QDataStream stream(&buffer, QIODevice::ReadWrite);
+        stream.setVersion(QDataStream::Qt_4_6);
         stream >> nextMessageSize;
         buffer.remove(0, 2);
     } else {
