@@ -20,12 +20,6 @@ bool TcpHelper::setSocket(QTcpSocket *socket)
         onDisconnected();
 
     if (socket && socket->state() == QAbstractSocket::ConnectedState) {
-        socket->setParent(this);
-
-        connect(socket, SIGNAL(readyRead()), this, SLOT(onReadyRead()));
-        connect(socket, SIGNAL(disconnected()), this, SLOT(onDisconnected()));
-
-
         peer = new Peer(this);
 
         connect(peer, SIGNAL(readyRequestMessage(QByteArray)),
@@ -43,6 +37,12 @@ bool TcpHelper::setSocket(QTcpSocket *socket)
                 SIGNAL(readyRequest(QSharedPointer<JsonRPC::ResponseHandler>)));
 
         this->socket = socket;
+
+        socket->setParent(this);
+
+        connect(socket, SIGNAL(readyRead()), this, SLOT(onReadyRead()));
+        connect(socket, SIGNAL(disconnected()), this, SLOT(onDisconnected()));
+
         return true;
     } else {
         return false;
