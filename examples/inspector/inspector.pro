@@ -1,4 +1,4 @@
-TARGET = phobosnode
+TARGET = inspector
 TEMPLATE = app
 
 include(../../qt-json-rpc.pri)
